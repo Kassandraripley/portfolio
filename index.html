@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — UI/UX Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--red:#dd0000;--red-dark:#8a0000;--black:#050505}
+    html{scroll-behavior:smooth}
+    body{font-family:'Space Grotesk',sans-serif;background:var(--black);color:#fff;min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+    .bg-glow{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+    .bg-glow-1{width:700px;height:700px;background:radial-gradient(circle,rgba(221,0,0,.4) 0%,transparent 70%);top:-250px;left:-200px}
+    .bg-glow-2{width:500px;height:500px;background:radial-gradient(circle,rgba(138,0,0,.55) 0%,transparent 70%);bottom:-100px;right:-100px}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#111}::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
+
+    /* HEADER */
+    header{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(24px);background:rgba(5,5,5,.75)}
+    header .header-nav{justify-self:end}
+    .logo-text{display:flex;align-items:center;font-size:.88rem;font-weight:500;color:rgba(255,255,255,.75);letter-spacing:-.01em}
+    .header-nav{display:flex;gap:36px;align-items:center}
+    .header-nav a{font-size:.82rem;color:rgba(255,255,255,.45);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+    .header-nav a:hover{color:#fff}
+
+    /* PROJETS DROPDOWN */
+    .nav-dropdown{position:relative}
+    .nav-dropdown-btn{font-size:.82rem;color:rgba(255,255,255,.45);letter-spacing:.06em;text-transform:uppercase;transition:color .2s;background:none;border:none;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;padding:0}
+    .nav-dropdown-btn:hover{color:#fff}
+    .nav-dropdown-btn::after{content:'▾';font-size:.6rem;opacity:.5}
+    .nav-dropdown-panel{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);background:rgba(10,10,10,.96);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:16px;display:flex;gap:10px;backdrop-filter:blur(24px);box-shadow:0 16px 48px rgba(0,0,0,.8);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;transform:translateX(-50%) translateY(-6px)}
+    .nav-dropdown:hover .nav-dropdown-panel{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+    .nav-dd-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;text-decoration:none}
+    .nav-dd-icon{width:48px;height:48px;border-radius:12px;background:#111;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+    .nav-dd-icon img{width:70%;height:70%;object-fit:contain}
+    .nav-dd-icon span{font-size:.65rem;font-weight:800;color:#fff;letter-spacing:-.01em}
+    .nav-dd-item:hover .nav-dd-icon{border-color:rgba(221,0,0,.6);box-shadow:0 4px 16px rgba(221,0,0,.3)}
+    .nav-dd-label{font-size:.55rem;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;font-family:'DM Mono',monospace;white-space:nowrap}
+    .btn-contact{padding:9px 22px;border:1px solid rgba(221,0,0,.7);border-radius:7px;font-size:.8rem;font-weight:600;color:var(--red);text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;background:rgba(221,0,0,.06)}
+    .btn-contact:hover{background:var(--red);color:#fff}
+
+    /* HERO */
+    .hero{position:relative;z-index:1;padding:140px 48px 24px;display:flex;flex-direction:column;align-items:center;text-align:center}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid rgba(221,0,0,.4);border-radius:100px;font-size:.7rem;font-weight:600;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px;background:rgba(221,0,0,.08)}
+    .hero-tag::before{content:'';width:6px;height:6px;background:var(--red);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+    .hero h1{font-size:clamp(2.4rem,6vw,4.8rem);font-weight:700;line-height:.92;letter-spacing:-.045em;margin-bottom:16px}
+    .hero h1 .outline{-webkit-text-stroke:1.5px rgba(255,255,255,.35);color:transparent}
+    .hero h1 .red{color:var(--red)}
+    .hero-desc{font-size:.95rem;color:rgba(255,255,255,.55);line-height:1.6;max-width:480px;margin-top:14px}
+
+    /* ====== DOCK ====== */
+    .dock-section{position:relative;z-index:10;padding-top:20px;padding-bottom:20px}
+    .dock-label{text-align:center;font-size:.68rem;color:rgba(255,255,255,.28);letter-spacing:.18em;text-transform:uppercase;margin-bottom:20px}
+    .dock-wrapper{display:flex;justify-content:center;align-items:flex-end;padding:0 48px;position:relative}
+    .dock-wrapper::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:70%;height:1px;background:linear-gradient(90deg,transparent,rgba(221,0,0,.5),rgba(255,255,255,.12),rgba(221,0,0,.5),transparent)}
+    .dock{display:flex;align-items:flex-end;gap:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:14px 20px;backdrop-filter:blur(24px);box-shadow:0 8px 48px rgba(0,0,0,.7),0 0 0 1px rgba(221,0,0,.12)}
+
+    .dock-item{display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:transform .22s cubic-bezier(.34,1.56,.64,1);transform-origin:bottom center;will-change:transform;position:relative}
+
+    .dock-icon{
+      width:96px;height:96px;border-radius:22px;
+      border:1px solid rgba(255,255,255,.15);
+      background:#0e0e0e;
+      overflow:hidden;position:relative;
+      display:flex;align-items:center;justify-content:center;
+      transition:border-color .2s, box-shadow .2s;
+      flex-shrink:0;
+    }
+    .dock-icon img{width:65%;height:65%;object-fit:contain;position:relative;z-index:1}
+    .dock-icon svg{width:72%;height:72%;position:relative;z-index:1}
+
+    /* OVERLAY name on hover */
+    .dock-overlay{
+      position:absolute;inset:0;
+      background:rgba(0,0,0,.82);
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;transition:opacity .18s;
+      border-radius:inherit;
+      font-size:.6rem;font-weight:700;letter-spacing:.08em;
+      text-transform:uppercase;color:#fff;
+      text-align:center;padding:8px;line-height:1.3;
+      z-index:2;
+    }
+    .dock-item:hover .dock-overlay{opacity:1}
+    .dock-item:hover .dock-icon{border-color:rgba(221,0,0,.7);box-shadow:0 10px 32px rgba(221,0,0,.4)}
+
+    /* PROJECTS */
+    .projects-container{position:relative;z-index:1}
+    .project-section{padding:120px 48px 100px;display:flex;flex-direction:column;justify-content:center;position:relative;border-top:1px solid rgba(255,255,255,.07)}
+    .project-section::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .6s;pointer-events:none}
+    .project-section:nth-child(odd)::before{background:radial-gradient(ellipse at 80% 50%,rgba(221,0,0,.07) 0%,transparent 55%)}
+    .project-section:nth-child(even)::before{background:radial-gradient(ellipse at 20% 50%,rgba(138,0,0,.12) 0%,transparent 55%)}
+    .project-section.in-view::before{opacity:1}
+    .project-inner{max-width:1240px;margin:0 auto;width:100%}
+    .project-number{font-family:'DM Mono',monospace;font-size:.72rem;color:rgba(221,0,0,.65);letter-spacing:.18em;margin-bottom:28px}
+
+    /* PROJECT HEADER */
+    .project-header{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;margin-bottom:40px;flex-wrap:wrap}
+    .project-logo-area{display:flex;align-items:center;gap:22px}
+    .project-logo-box{width:88px;height:88px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid rgba(255,255,255,.15);overflow:hidden;flex-shrink:0}
+    .project-logo-box img{width:66%;height:66%;object-fit:contain}
+    .project-logo-box svg{width:72%;height:72%}
+    .project-title{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;letter-spacing:-.035em;line-height:1}
+    .project-subtitle{font-size:.9rem;color:rgba(255,255,255,.45);margin-top:8px}
+    .project-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .tag{padding:5px 13px;border-radius:100px;font-size:.7rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase}
+    .tag-red{background:rgba(221,0,0,.18);color:#ff4444;border:1px solid rgba(221,0,0,.4)}
+    .tag-white{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15)}
+    .tag-green{background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.25)}
+
+    /* VISIT BTN */
+    .btn-visit{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;background:rgba(221,0,0,.1);border:1px solid rgba(221,0,0,.45);color:#ff4444;font-size:.8rem;font-weight:600;text-decoration:none;letter-spacing:.04em;transition:all .2s;margin-top:16px}
+    .btn-visit:hover{background:var(--red);color:#fff;border-color:var(--red)}
+    .btn-visit svg{width:13px;height:13px;flex-shrink:0}
+
+    /* METRICS */
+    .metrics-row{display:flex;gap:28px;flex-wrap:wrap;align-self:flex-start;padding-top:8px}
+    .metric{display:flex;flex-direction:column;gap:4px}
+    .metric-value{font-size:2.2rem;font-weight:700;letter-spacing:-.045em;color:var(--red);line-height:1}
+    .metric-label{font-size:.72rem;color:rgba(255,255,255,.45)}
+
+    /* CAROUSEL */
+    .screenshots-section{margin-bottom:32px}
+    .carousel{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.13);background:#0d0d0d}
+    .car-bar{background:rgba(255,255,255,.07);padding:9px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .screen-dots{display:flex;gap:5px;flex-shrink:0}
+    .dot{width:8px;height:8px;border-radius:50%}
+    .dot-r{background:#ff5f57}.dot-y{background:#ffbd2e}.dot-g{background:#28c840}
+    .screen-url-bar{flex:1;background:rgba(255,255,255,.06);border-radius:5px;padding:3px 10px;font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.4)}
+    .screen-url-bar a{color:rgba(255,255,255,.4);text-decoration:none}
+    .car-nav{display:flex;align-items:center;gap:6px;flex-shrink:0}
+    .car-btn{width:26px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1;padding:0}
+    .car-btn:hover{background:rgba(221,0,0,.2);border-color:rgba(221,0,0,.5);color:#fff}
+    .car-counter{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.35);min-width:32px;text-align:center}
+    .car-slides{position:relative;overflow:hidden}
+    .car-slide{width:100%;display:none;max-height:680px;object-fit:cover;object-position:top;background:#0d0d0d}
+    .car-slide.active{display:block;animation:carFadeIn .3s ease}
+    @keyframes carFadeIn{from{opacity:0}to{opacity:1}}
+    .car-slide.broken{display:none!important}
+    .car-dots-row{display:flex;justify-content:center;gap:7px;padding:10px 0 8px}
+    .car-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:background .2s,transform .2s}
+    .car-dot.active{background:var(--red);transform:scale(1.3)}
+
+    /* CARDS GRID */
+    .project-grid{display:grid;gap:16px;margin-bottom:16px}
+    .card{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:24px;transition:all .3s;position:relative;overflow:hidden}
+    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(221,0,0,.5),transparent);opacity:0;transition:opacity .3s}
+    .card:hover{border-color:rgba(221,0,0,.3);transform:translateY(-2px);background:rgba(255,255,255,.07)}
+    .card:hover::before{opacity:1}
+    .card-label{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#ff4444;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+    .card-label::before{content:'';width:16px;height:1.5px;background:#ff4444}
+    .card h3{font-size:.95rem;font-weight:700;margin-bottom:8px;letter-spacing:-.01em;color:rgba(255,255,255,.95)}
+    .card p{font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.72}
+
+    /* STACK */
+    .stack-grid{display:flex;flex-wrap:wrap;gap:8px}
+    .stack-item{display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:8px;font-family:'DM Mono',monospace;font-size:.74rem;color:rgba(255,255,255,.75);transition:all .2s}
+    .stack-item:hover{border-color:rgba(221,0,0,.4);color:#fff;background:rgba(221,0,0,.08)}
+    .stack-item img{width:20px;height:20px;object-fit:contain}
+    .stack-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0}
+
+    /* PLATFORM */
+    .platform-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06);font-size:.82rem;color:rgba(255,255,255,.7)}
+    .platform-badges{display:flex;gap:10px;flex-wrap:wrap}
+
+    /* SKILLS */
+    .skills-section{position:relative;z-index:1;padding:80px 48px;border-top:1px solid rgba(255,255,255,.07)}
+    .skills-inner{max-width:1240px;margin:0 auto}
+    .skills-label{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(221,0,0,.7);margin-bottom:40px;font-family:'DM Mono',monospace}
+    .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .skill-col{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;position:relative;overflow:hidden;transition:border-color .3s}
+    .skill-col::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(221,0,0,.6),transparent);opacity:0;transition:opacity .3s}
+    .skill-col:hover{border-color:rgba(221,0,0,.25)}
+    .skill-col:hover::before{opacity:1}
+    .skill-col-header{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+    .skill-icon{font-size:1.3rem;line-height:1}
+    .skill-col-header h3{font-size:1rem;font-weight:700;letter-spacing:-.02em;color:#fff}
+    .skill-list{list-style:none;display:flex;flex-direction:column;gap:9px}
+    .skill-list li{font-size:.82rem;color:rgba(255,255,255,.55);padding-left:14px;position:relative;line-height:1.4}
+    .skill-list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:var(--red);opacity:.6}
+
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(221,0,0,.35),transparent);margin:0 48px}
+
+    /* FOOTER */
+    footer{position:relative;z-index:1;padding:70px 48px 48px;border-top:1px solid rgba(255,255,255,.08);text-align:center}
+    .footer-name{font-size:3.5rem;font-weight:700;letter-spacing:-.04em;margin-bottom:20px;-webkit-text-stroke:1.5px rgba(255,255,255,.2);color:transparent}
+    .footer-links{display:flex;justify-content:center;gap:36px;margin-bottom:48px}
+    .footer-links a{font-size:.85rem;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:var(--red)}
+    .footer-copy{font-size:.72rem;color:rgba(255,255,255,.22);font-family:'DM Mono',monospace}
+
+    /* ANIMATIONS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+    .fade-up{opacity:0;animation:fadeUp .75s cubic-bezier(.22,1,.36,1) forwards}
+    .fade-up-1{animation-delay:.1s}.fade-up-2{animation-delay:.22s}.fade-up-3{animation-delay:.35s}
+    .project-reveal{opacity:0;transform:translateY(44px);transition:opacity .85s cubic-bezier(.22,1,.36,1),transform .85s cubic-bezier(.22,1,.36,1)}
+    .project-reveal.revealed{opacity:1;transform:none}
+
+    @media(max-width:800px){
+      header{padding:16px 20px}.header-nav{display:none}
+      .hero{padding:140px 20px 60px}.project-section{padding:80px 20px 60px}
+      .dock{gap:8px;padding:14px 16px;flex-wrap:wrap;justify-content:center}
+      .dock-icon{width:64px;height:64px}
+      .project-grid{grid-template-columns:1fr!important}
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
+<header>
+  <div class="logo-text">Hi, 👋 Je suis Kassandra</div>
+  <nav class="header-nav">
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-btn">Projets</button>
+      <div class="nav-dropdown-panel">
+        <a class="nav-dd-item" onclick="scrollToProject('fluxr')">
+          <div class="nav-dd-icon"><img src="assets/logos/Fluxr.png" onerror="this.style.display='none'"></div>
+          <span class="nav-dd-label">Fluxr</span>
+        </a>
+        <a class="nav-dd-item" onclick="scrollToProject('chathunter')">
+          <div class="nav-dd-icon"><img src="assets/logos/Hunter%20noir%20et%20blanc.png" onerror="this.style.display='none'"></div>
+          <span class="nav-dd-label">Hunter</span>
+        </a>
+        <a class="nav-dd-item" onclick="scrollToProject('saas-comparator')">
+          <div class="nav-dd-icon"><img src="assets/logos/SaasComparator.png" onerror="this.style.display='none'"></div>
+          <span class="nav-dd-label">SaaS Comp.</span>
+        </a>
+        <a class="nav-dd-item" onclick="scrollToProject('wedate')">
+          <div class="nav-dd-icon"><img src="assets/logos/Wedate.png" onerror="this.style.display='none'"></div>
+          <span class="nav-dd-label">We Date</span>
+        </a>
+        <a class="nav-dd-item" onclick="scrollToProject('ng5')">
+          <div class="nav-dd-icon"><img src="assets/logos/NG5.png" onerror="this.style.display='none'"></div>
+          <span class="nav-dd-label">NG5</span>
+        </a>
+        <a class="nav-dd-item" onclick="scrollToProject('turion')">
+          <div class="nav-dd-icon"><span>T</span></div>
+          <span class="nav-dd-label">Turion</span>
+        </a>
+        <a class="nav-dd-item" onclick="scrollToProject('kookies')">
+          <div class="nav-dd-icon"><img src="assets/logos/Kookies.png" onerror="this.style.display='none'"></div>
+          <span class="nav-dd-label">Kookies</span>
+        </a>
+        <a class="nav-dd-item" onclick="scrollToProject('sneakerslegit')">
+          <div class="nav-dd-icon"><span>SL</span></div>
+          <span class="nav-dd-label">Sneakers</span>
+        </a>
+        <a class="nav-dd-item" onclick="scrollToProject('mitouflay')">
+          <div class="nav-dd-icon"><img src="assets/logos/Mitouflay.png" onerror="this.style.display='none'"></div>
+          <span class="nav-dd-label">Mitouflay</span>
+        </a>
+      </div>
+    </div>
+    <a href="#contact" class="btn-contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-tag fade-up fade-up-1">Available for work</div>
+  <h1 class="fade-up fade-up-2">UI/UX<br><span class="outline">Design</span><br><span class="red">&amp; Branding</span></h1>
+  <p class="hero-desc fade-up fade-up-3">Je transforme des idées en produits que les gens utilisent vraiment. Logo, app, landing, tunnel de vente — je construis tout, du premier pixel jusqu'au premier euro.</p>
+</section>
+
+<!-- ===== DOCK ===== -->
+<div class="dock-section" id="projects">
+  <p class="dock-label">9 projets — survolez pour explorer</p>
+  <div class="dock-wrapper">
+    <div class="dock" id="mainDock">
+
+      <div class="dock-item" onclick="scrollToProject('fluxr')">
+        <div class="dock-icon">
+          <img src="assets/logos/Fluxr.png" alt="Fluxr" onerror="this.style.display='none'">
+          <div class="dock-overlay">Fluxr</div>
+        </div>
+      </div>
+
+      <div class="dock-item" onclick="scrollToProject('chathunter')">
+        <div class="dock-icon">
+          <img src="assets/logos/Hunter%20noir%20et%20blanc.png" alt="ChatHunter" onerror="this.style.display='none'">
+          <div class="dock-overlay">Chat<br>Hunter</div>
+        </div>
+      </div>
+
+      <div class="dock-item" onclick="scrollToProject('saas-comparator')">
+        <div class="dock-icon">
+          <img src="assets/logos/SaasComparator.png" alt="SaaS Comparator" onerror="this.style.display='none'">
+          <div class="dock-overlay">SaaS<br>Comp.</div>
+        </div>
+      </div>
+
+      <div class="dock-item" onclick="scrollToProject('wedate')">
+        <div class="dock-icon">
+          <img src="assets/logos/Wedate.png" alt="We Date" onerror="this.style.display='none'">
+          <div class="dock-overlay">We Date</div>
+        </div>
+      </div>
+
+      <div class="dock-item" onclick="scrollToProject('ng5')">
+        <div class="dock-icon">
+          <img src="assets/logos/NG5.png" alt="NG5" onerror="this.style.display='none'">
+          <div class="dock-overlay">NG5 by<br>Edge Vision</div>
+        </div>
+      </div>
+
+      <div class="dock-item" onclick="scrollToProject('turion')">
+        <div class="dock-icon" style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:.75rem;color:#fff;letter-spacing:-.03em">
+          TURION
+          <div class="dock-overlay">Turion</div>
+        </div>
+      </div>
+
+      <div class="dock-item" onclick="scrollToProject('kookies')">
+        <div class="dock-icon">
+          <img src="assets/logos/Kookies.png" alt="Kookies" onerror="this.style.display='none'">
+          <div class="dock-overlay">Kookies</div>
+        </div>
+      </div>
+
+      <div class="dock-item" onclick="scrollToProject('sneakerslegit')">
+        <div class="dock-icon" style="font-family:'Space Grotesk',sans-serif;font-weight:900;font-size:1.1rem;color:#fff">
+          SL
+          <div class="dock-overlay">Sneakers<br>Legit</div>
+        </div>
+      </div>
+
+      <div class="dock-item" onclick="scrollToProject('mitouflay')">
+        <div class="dock-icon">
+          <img src="assets/logos/Mitouflay.png" alt="Mitouflay" onerror="this.style.display='none'">
+          <div class="dock-overlay">Mitouflay</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== SKILLS ===== -->
+<section class="skills-section" id="competences">
+  <div class="skills-inner">
+    <p class="skills-label">Compétences</p>
+    <div class="skills-grid">
+
+      <div class="skill-col">
+        <div class="skill-col-header">
+          <span class="skill-icon">⌨️</span>
+          <h3>Code & Produit</h3>
+        </div>
+        <ul class="skill-list">
+          <li>React 18 / Vite / Next.js</li>
+          <li>Tailwind CSS / CSS avancé</li>
+          <li>Supabase / PostgreSQL</li>
+          <li>Stripe (intégration paiement)</li>
+          <li>PWA / Mobile-first</li>
+          <li>GitHub / CI-CD</li>
+          <li>Figma (expert)</li>
+          <li>Design System / Tokens</li>
+          <li>Prototypage haute fidélité</li>
+          <li>Responsive & Accessibilité</li>
+        </ul>
+      </div>
+
+      <div class="skill-col">
+        <div class="skill-col-header">
+          <span class="skill-icon">📈</span>
+          <h3>Marketing & GTM</h3>
+        </div>
+        <ul class="skill-list">
+          <li>Stratégie go-to-market</li>
+          <li>SEO technique & contenu</li>
+          <li>Copywriting & conversion</li>
+          <li>Funnel d'acquisition</li>
+          <li>Pricing & monétisation SaaS</li>
+          <li>Email marketing transactionnel</li>
+          <li>Branding & identité visuelle</li>
+          <li>Social media (Instagram, TikTok)</li>
+          <li>Analytics & data-driven design</li>
+          <li>UGC & growth hacking</li>
+        </ul>
+      </div>
+
+      <div class="skill-col">
+        <div class="skill-col-header">
+          <span class="skill-icon">🤖</span>
+          <h3>IA & Automation</h3>
+        </div>
+        <ul class="skill-list">
+          <li>Prompt Engineering (UX-oriented)</li>
+          <li>UX conversationnelle & chatbots</li>
+          <li>Conception d'interfaces IA</li>
+          <li>Intégration LLM (Claude, GPT-4)</li>
+          <li>Agents IA & MCP</li>
+          <li>Génération de contenu IA</li>
+          <li>n8n / automatisation de flux</li>
+          <li>Veille & monitoring automatisé</li>
+          <li>RAG & bases de connaissances</li>
+          <li>AI-first product design</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<div class="projects-container">
+
+<!-- 01 FLUXR -->
+<section class="project-section" id="fluxr">
+<div class="project-inner project-reveal">
+  <p class="project-number">// 01</p>
+  <div class="project-header">
+    <div>
+      <div class="project-logo-area">
+        <div class="project-logo-box">
+          <img src="assets/logos/Fluxr.png" alt="Fluxr">
+        </div>
+        <div>
+          <h2 class="project-title">Fluxr</h2>
+          <p class="project-subtitle">Agrégateur de veille IA — SaaS B2B</p>
+          <div class="project-tags">
+            <span class="tag tag-red">Branding</span><span class="tag tag-red">UI/UX</span>
+            <span class="tag tag-white">GTM</span><span class="tag tag-green">Revenue</span>
+          </div>
+          <a href="https://fluxr.fr" target="_blank" class="btn-visit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            fluxr.fr
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="metrics-row">
+      <div class="metric"><span class="metric-value">1200+</span><span class="metric-label">Sources indexées</span></div>
+      <div class="metric"><span class="metric-value">1800</span><span class="metric-label">Utilisateurs</span></div>
+      <div class="metric"><span class="metric-value">3</span><span class="metric-label">Plans</span></div>
+      <div class="metric"><span class="metric-value">PWA</span><span class="metric-label">Mobile-first</span></div>
+    </div>
+  </div>
+
+  <div class="screenshots-section">
+    <div class="carousel">
+      <div class="car-bar">
+        <div class="screen-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="screen-url-bar"><a href="https://fluxr.fr" target="_blank">fluxr.fr</a></div>
+        <div class="car-nav">
+          <button class="car-btn car-prev">‹</button>
+          <span class="car-counter">1 / 5</span>
+          <button class="car-btn car-next">›</button>
+        </div>
+      </div>
+      <div class="car-slides">
+        <img class="car-slide active" src="assets/Screenshot/Fluxr%231.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Fluxr%232.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Fluxr%233.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Fluxr%234.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Fluxr%235.png" onerror="this.classList.add('broken')">
+      </div>
+      <div class="car-dots-row">
+        <span class="car-dot active"></span><span class="car-dot"></span><span class="car-dot"></span><span class="car-dot"></span><span class="car-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-grid" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="card">
+      <p class="card-label">Idée</p>
+      <h3>Veille IA en temps réel</h3>
+      <p>75+ sources FR/intl centralisées, flux personnalisé, monitoring mots-clés et alertes instantanées.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Approche design</p>
+      <h3>Dark UI haute densité</h3>
+      <p>Interface pour pros qui lisent vite. Dark mode natif, typo dense, flux infini. Logo entrelacé créé from scratch.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Stack & Plateformes</p>
+      <div class="stack-grid" style="margin-bottom:12px">
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="">React 18</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" alt="">Supabase</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" alt="">Vite</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/stripe/stripe-original.svg" alt="">Stripe</div>
+        <div class="stack-item"><div class="stack-dot"></div>PWA</div>
+      </div>
+      <div class="platform-badges">
+        <div class="platform-badge">📱 Mobile</div><div class="platform-badge">🖥️ Desktop</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 02 CHATHUNTER -->
+<section class="project-section" id="chathunter">
+<div class="project-inner project-reveal">
+  <p class="project-number">// 02</p>
+  <div class="project-header">
+    <div>
+      <div class="project-logo-area">
+        <div class="project-logo-box">
+          <img src="assets/logos/Hunter%20noir%20et%20blanc.png" alt="ChatHunter">
+        </div>
+        <div>
+          <h2 class="project-title">ChatHunter</h2>
+          <p class="project-subtitle">Chat de veille IA — chathunter.fr</p>
+          <div class="project-tags">
+            <span class="tag tag-red">Branding</span><span class="tag tag-red">UI/UX</span>
+            <span class="tag tag-white">GTM</span><span class="tag tag-green">Revenue</span>
+          </div>
+          <a href="https://chathunter.fr" target="_blank" class="btn-visit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            chathunter.fr
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="metrics-row">
+      <div class="metric"><span class="metric-value">700+</span><span class="metric-label">Utilisateurs</span></div>
+      <div class="metric"><span class="metric-value">PWA</span><span class="metric-label">Mobile-first</span></div>
+      <div class="metric"><span class="metric-value">Chat</span><span class="metric-label">Agentique</span></div>
+    </div>
+  </div>
+
+  <div class="screenshots-section">
+    <div class="carousel">
+      <div class="car-bar">
+        <div class="screen-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="screen-url-bar"><a href="https://chathunter.fr" target="_blank">chathunter.fr</a></div>
+        <div class="car-nav">
+          <button class="car-btn car-prev">‹</button>
+          <span class="car-counter">1 / 4</span>
+          <button class="car-btn car-next">›</button>
+        </div>
+      </div>
+      <div class="car-slides">
+        <img class="car-slide active" src="assets/Screenshot/Chathunter%231.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Chathunter%232.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Chathunter%233.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Chathunter%234.png" onerror="this.classList.add('broken')">
+      </div>
+      <div class="car-dots-row">
+        <span class="car-dot active"></span><span class="car-dot"></span><span class="car-dot"></span><span class="car-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-grid" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="card">
+      <p class="card-label">Idée</p>
+      <h3>L'IA qui chasse à votre place</h3>
+      <p>Interface conversationnelle — posez une question, Hunter agrège les signaux et répond en secondes.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Branding</p>
+      <h3>Lapin-Chasseur. Agressif.</h3>
+      <p>Mascotte lapin géométrique regard frontal. Rouge #dd0000 sur noir. Identité volontairement distincte de Fluxr.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Stack & Plateformes</p>
+      <div class="stack-grid" style="margin-bottom:12px">
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="">React 18</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" alt="">Vite</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="">Tailwind</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" alt="">Supabase</div>
+      </div>
+      <div class="platform-badges">
+        <div class="platform-badge">📱 Mobile</div><div class="platform-badge">🖥️ Desktop</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 03 SAAS COMPARATOR -->
+<section class="project-section" id="saas-comparator">
+<div class="project-inner project-reveal">
+  <p class="project-number">// 03</p>
+  <div class="project-header">
+    <div>
+      <div class="project-logo-area">
+        <div class="project-logo-box">
+          <img src="assets/logos/SaasComparator.png" alt="SaaS Comparator">
+        </div>
+        <div>
+          <h2 class="project-title">SaaS<br>Comparator</h2>
+          <p class="project-subtitle">Comparateur SaaS — Aide à la décision B2B</p>
+          <div class="project-tags">
+            <span class="tag tag-red">UI/UX</span><span class="tag tag-white">GTM</span><span class="tag tag-green">Revenue</span>
+          </div>
+          <a href="https://saascomparator.com" target="_blank" class="btn-visit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            saascomparator.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screenshots-section">
+    <div class="carousel">
+      <div class="car-bar">
+        <div class="screen-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="screen-url-bar"><a href="https://saascomparator.com" target="_blank">saascomparator.com</a></div>
+        <div class="car-nav">
+          <button class="car-btn car-prev">‹</button>
+          <span class="car-counter">1 / 1</span>
+          <button class="car-btn car-next">›</button>
+        </div>
+      </div>
+      <div class="car-slides">
+        <img class="car-slide active" src="assets/Screenshot/Saascomparator%231.png" onerror="this.classList.add('broken')">
+      </div>
+      <div class="car-dots-row">
+        <span class="car-dot active"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-grid" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="card">
+      <p class="card-label">Idée</p>
+      <h3>303+ SaaS comparés</h3>
+      <p>Moteur multi-critères, prix mis à jour en temps réel, 190 plans gratuits, 33 solutions françaises référencées.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">GTM & Revenue</p>
+      <h3>SEO + Affiliation</h3>
+      <p>Architecture longue traîne, pages comparatives ciblées. Affiliation + plan premium éditeurs.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Stack</p>
+      <div class="stack-grid">
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="">Next.js</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="">Tailwind</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" alt="">Supabase</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="">TypeScript</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 04 WE DATE -->
+<section class="project-section" id="wedate">
+<div class="project-inner project-reveal">
+  <p class="project-number">// 04</p>
+  <div class="project-header">
+    <div>
+      <div class="project-logo-area">
+        <div class="project-logo-box">
+          <img src="assets/logos/Wedate.png" alt="We Date">
+        </div>
+        <div>
+          <h2 class="project-title">We Date</h2>
+          <p class="project-subtitle">Application de rencontres — Mobile-first</p>
+          <div class="project-tags">
+            <span class="tag tag-red">Branding</span><span class="tag tag-red">UI/UX</span>
+          </div>
+          <a href="https://www.figma.com/design/QAyn38jz2z29gWHItKpstn/App-WeDate-%E2%9D%A4%EF%B8%8F%E2%80%8D%F0%9F%94%A5?t=lGxzlZU2FvwuKOSi-0" target="_blank" class="btn-visit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Voir sur Figma
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screenshots-section">
+    <div class="carousel">
+      <div class="car-bar">
+        <div class="screen-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="screen-url-bar">We Date — App &amp; Figma</div>
+        <div class="car-nav">
+          <button class="car-btn car-prev">‹</button>
+          <span class="car-counter">1 / 5</span>
+          <button class="car-btn car-next">›</button>
+        </div>
+      </div>
+      <div class="car-slides">
+        <img class="car-slide active" src="assets/Screenshot/We%20date%231.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/We%20date%232.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/We%20date%233.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/We%20date%234.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/We%20date%235.png" onerror="this.classList.add('broken')">
+      </div>
+      <div class="car-dots-row">
+        <span class="car-dot active"></span><span class="car-dot"></span><span class="car-dot"></span><span class="car-dot"></span><span class="car-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-grid" style="grid-template-columns:1fr 1fr">
+    <div class="card">
+      <p class="card-label">Concept</p>
+      <h3>Rencontres authentiques, sans swipe addictif</h3>
+      <p>Profils vidéo, compatibilité réelle, WeDate Live pour events. UX gesture-first, bottom-nav intuitive, design system complet.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Livrables</p>
+      <h3>50+ écrans Figma haute fidélité</h3>
+      <div class="stack-grid" style="margin-top:10px">
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="">Figma</div>
+        <div class="platform-badge">📱 iOS</div><div class="platform-badge">🤖 Android</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 05 NG5 -->
+<section class="project-section" id="ng5">
+<div class="project-inner project-reveal">
+  <p class="project-number">// 05</p>
+  <div class="project-header">
+    <div>
+      <div class="project-logo-area">
+        <div class="project-logo-box">
+          <img src="assets/logos/NG5.png" alt="NG5">
+        </div>
+        <div>
+          <h2 class="project-title">NG5</h2>
+          <p class="project-subtitle">by Edge Vision — Lunettes tech premium</p>
+          <div class="project-tags">
+            <span class="tag tag-red">Branding</span><span class="tag tag-red">UI/UX</span>
+          </div>
+          <a href="https://kassandraemardpro.wixstudio.com/portfolio/home-1" target="_blank" class="btn-visit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Voir le projet
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screenshots-section">
+    <div class="carousel">
+      <div class="car-bar">
+        <div class="screen-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="screen-url-bar">NG5 by Edge Vision</div>
+        <div class="car-nav">
+          <button class="car-btn car-prev">‹</button>
+          <span class="car-counter">1 / 4</span>
+          <button class="car-btn car-next">›</button>
+        </div>
+      </div>
+      <div class="car-slides">
+        <img class="car-slide active" src="assets/Screenshot/NG5%231.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/NG5%232.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/NG5%233.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/NG5%234.png" onerror="this.classList.add('broken')">
+      </div>
+      <div class="car-dots-row">
+        <span class="car-dot active"></span><span class="car-dot"></span><span class="car-dot"></span><span class="car-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-grid" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="card">
+      <p class="card-label">Concept</p>
+      <h3>Lunettes futuristes tech</h3>
+      <p>Marque premium, positionnement sci-fi. E-commerce + contenu AI généré + social media bold. Jaune électrique sur désert.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Branding</p>
+      <h3>Bold, italique, agressif</h3>
+      <p>Logotype condensé évoquant vitesse. Brand design + AI Content + social media design. Collection 2024 & 2025.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Livrables</p>
+      <div class="stack-grid">
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="">Figma</div>
+        <div class="stack-item"><div class="stack-dot"></div>Illustrator</div>
+        <div class="stack-item"><div class="stack-dot"></div>AI Content</div>
+        <div class="stack-item"><div class="stack-dot"></div>Instagram</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 06 TURION -->
+<section class="project-section" id="turion">
+<div class="project-inner project-reveal">
+  <p class="project-number">// 06</p>
+  <div class="project-header">
+    <div>
+      <div class="project-logo-area">
+        <div class="project-logo-box" style="font-family:'Space Grotesk',sans-serif;font-weight:900;font-size:.9rem;color:#fff;letter-spacing:-.03em">
+          TURION
+        </div>
+        <div>
+          <h2 class="project-title">Turion</h2>
+          <p class="project-subtitle">Nootropic Drink — Branding & E-commerce</p>
+          <div class="project-tags">
+            <span class="tag tag-red">Branding</span><span class="tag tag-red">UI/UX</span>
+          </div>
+          <a href="https://kassandraemardpro.wixstudio.com/portfolio/blank-5" target="_blank" class="btn-visit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Voir le projet
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screenshots-section">
+    <div class="carousel">
+      <div class="car-bar">
+        <div class="screen-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="screen-url-bar">Turion — Nootropic Drink</div>
+        <div class="car-nav">
+          <button class="car-btn car-prev">‹</button>
+          <span class="car-counter">1 / 4</span>
+          <button class="car-btn car-next">›</button>
+        </div>
+      </div>
+      <div class="car-slides">
+        <img class="car-slide active" src="assets/Screenshot/Turion%231.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Turion%232.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Turion%233.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Turion%234.png" onerror="this.classList.add('broken')">
+      </div>
+      <div class="car-dots-row">
+        <span class="car-dot active"></span><span class="car-dot"></span><span class="car-dot"></span><span class="car-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-grid" style="grid-template-columns:1fr 1fr">
+    <div class="card">
+      <p class="card-label">Concept</p>
+      <h3>Nootropic Drink — "Stay Efficient"</h3>
+      <p>Brand design complet, Shopify, Instagram. Positionnement science &amp; performance pour intellectuels et explorateurs. Logo circulaire entrelacé.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Livrables</p>
+      <div class="stack-grid" style="margin-bottom:12px">
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="">Figma</div>
+        <div class="stack-item"><div class="stack-dot"></div>Shopify</div>
+        <div class="stack-item"><div class="stack-dot"></div>AI Content</div>
+        <div class="stack-item"><div class="stack-dot"></div>Instagram</div>
+      </div>
+      <div class="platform-badges">
+        <div class="platform-badge">🛒 Shopify</div><div class="platform-badge">📦 Packaging</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 07 KOOKIES -->
+<section class="project-section" id="kookies">
+<div class="project-inner project-reveal">
+  <p class="project-number">// 07</p>
+  <div class="project-header">
+    <div>
+      <div class="project-logo-area">
+        <div class="project-logo-box">
+          <img src="assets/logos/Kookies.png" alt="Kookies">
+        </div>
+        <div>
+          <h2 class="project-title">Kookies</h2>
+          <p class="project-subtitle">E-commerce — Food & Lifestyle D2C</p>
+          <div class="project-tags">
+            <span class="tag tag-red">Branding</span><span class="tag tag-red">UI/UX</span>
+            <span class="tag tag-white">GTM</span><span class="tag tag-green">Revenue</span>
+          </div>
+          <a href="https://kassandraemardpro.wixstudio.com/portfolio/blank-2" target="_blank" class="btn-visit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Voir le projet
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screenshots-section">
+    <div class="carousel">
+      <div class="car-bar">
+        <div class="screen-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="screen-url-bar">Kookies</div>
+        <div class="car-nav">
+          <button class="car-btn car-prev">‹</button>
+          <span class="car-counter">1 / 3</span>
+          <button class="car-btn car-next">›</button>
+        </div>
+      </div>
+      <div class="car-slides">
+        <img class="car-slide active" src="assets/Screenshot/Kookies%231.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Kookies%232.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Kookies%233.png" onerror="this.classList.add('broken')">
+      </div>
+      <div class="car-dots-row">
+        <span class="car-dot active"></span><span class="car-dot"></span><span class="car-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-grid" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="card">
+      <p class="card-label">Concept</p>
+      <h3>Cookies artisanaux premium</h3>
+      <p>Marque food DTC haut de gamme — wordmark bold ultra-condensé, impact immédiat sur packaging et digital.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">GTM</p>
+      <h3>Social → Tunnel → Fidélisation</h3>
+      <p>Instagram-first, tunnel d'achat optimisé, programme abonnement box mensuelle. Acquisition via UGC.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Livrables</p>
+      <div class="stack-grid" style="margin-bottom:12px">
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="">Figma</div>
+        <div class="stack-item"><div class="stack-dot"></div>Shopify</div>
+        <div class="stack-item"><div class="stack-dot"></div>Instagram</div>
+      </div>
+      <div class="platform-badges">
+        <div class="platform-badge">📱 Mobile</div><div class="platform-badge">📦 Packaging</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 08 SNEAKERSLEGIT -->
+<section class="project-section" id="sneakerslegit">
+<div class="project-inner project-reveal">
+  <p class="project-number">// 08</p>
+  <div class="project-header">
+    <div>
+      <div class="project-logo-area">
+        <div class="project-logo-box" style="font-family:'Space Grotesk',sans-serif;font-weight:900;font-size:1.3rem;color:#fff">SL</div>
+        <div>
+          <h2 class="project-title">Sneakers<br>Legit</h2>
+          <p class="project-subtitle">Marketplace — Authentification sneakers</p>
+          <div class="project-tags">
+            <span class="tag tag-red">Branding</span><span class="tag tag-red">UI/UX</span>
+            <span class="tag tag-white">GTM</span><span class="tag tag-green">Revenue</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="screenshots-section">
+    <div class="carousel">
+      <div class="car-bar">
+        <div class="screen-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="screen-url-bar">SneakersLegit</div>
+        <div class="car-nav">
+          <button class="car-btn car-prev">‹</button>
+          <span class="car-counter">1 / 3</span>
+          <button class="car-btn car-next">›</button>
+        </div>
+      </div>
+      <div class="car-slides">
+        <img class="car-slide active" src="assets/Screenshot/SNEAKERSLEGIT%231.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/SNEAKERSLEGIT%232.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/SNEAKERSLEGIT%233.png" onerror="this.classList.add('broken')">
+      </div>
+      <div class="car-dots-row">
+        <span class="car-dot active"></span><span class="car-dot"></span><span class="car-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-grid" style="grid-template-columns:1fr 1fr">
+    <div class="card">
+      <p class="card-label">Concept</p>
+      <h3>La vérité sur chaque paire</h3>
+      <p>Marketplace sneakers avec authentification intégrée — chaque vente validée par des experts avant livraison.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Stack & Revenue</p>
+      <div class="stack-grid" style="margin-bottom:12px">
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="">React Native</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="">Node.js</div>
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/stripe/stripe-original.svg" alt="">Stripe</div>
+      </div>
+      <p style="font-size:.82rem;color:rgba(255,255,255,.6)">Commission 8% + authentification payante + abonnement vendeurs.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 09 MITOUFLAY -->
+<section class="project-section" id="mitouflay">
+<div class="project-inner project-reveal">
+  <p class="project-number">// 09</p>
+  <div class="project-header">
+    <div>
+      <div class="project-logo-area">
+        <div class="project-logo-box">
+          <img src="assets/logos/Mitouflay.png" alt="Mitouflay">
+        </div>
+        <div>
+          <h2 class="project-title">Mitouflay</h2>
+          <p class="project-subtitle">App mobile — Bien-être animal</p>
+          <div class="project-tags">
+            <span class="tag tag-red">Branding</span><span class="tag tag-red">UI/UX</span>
+          </div>
+          <a href="https://kassandraemardpro.wixstudio.com/portfolio/blank-4" target="_blank" class="btn-visit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Voir le projet
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="screenshots-section">
+    <div class="carousel">
+      <div class="car-bar">
+        <div class="screen-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="screen-url-bar">Mitouflay</div>
+        <div class="car-nav">
+          <button class="car-btn car-prev">‹</button>
+          <span class="car-counter">1 / 3</span>
+          <button class="car-btn car-next">›</button>
+        </div>
+      </div>
+      <div class="car-slides">
+        <img class="car-slide active" src="assets/Screenshot/Mitouflay%231.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Mitouflay%232.png" onerror="this.classList.add('broken')">
+        <img class="car-slide" src="assets/Screenshot/Mitouflay%233.png" onerror="this.classList.add('broken')">
+      </div>
+      <div class="car-dots-row">
+        <span class="car-dot active"></span><span class="car-dot"></span><span class="car-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-grid" style="grid-template-columns:1fr 1fr">
+    <div class="card">
+      <p class="card-label">Concept</p>
+      <h3>Le carnet de santé de votre animal</h3>
+      <p>Rappels vétérinaires, vaccinations, historique médical. Logo M maison-chat, géométrique et rassurant.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Livrables</p>
+      <p style="font-size:.85rem;color:rgba(255,255,255,.6);margin-bottom:12px">50+ écrans, design system, illustrations custom, prototype interactif.</p>
+      <div class="stack-grid" style="margin-bottom:12px">
+        <div class="stack-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="">Figma</div>
+      </div>
+      <div class="platform-badges">
+        <div class="platform-badge">📱 iOS</div><div class="platform-badge">🤖 Android</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+</div><!-- /projects-container -->
+
+<footer id="contact">
+  <p class="footer-name">Kassandra Emard</p>
+  <div class="footer-links">
+    <a href="mailto:kassandra.emard.pro@gmail.com">kassandra.emard.pro@gmail.com</a>
+  </div>
+  <p class="footer-copy">UI/UX Designer & Brand Strategist — Paris © 2026</p>
+</footer>
+
+<script>
+  // ---- DOCK ----
+  const dock = document.getElementById('mainDock');
+  const items = dock.querySelectorAll('.dock-item');
+  dock.addEventListener('mousemove', (e) => {
+    const dockRect = dock.getBoundingClientRect();
+    const mouseX = e.clientX - dockRect.left;
+    items.forEach((item) => {
+      const rect = item.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2 - dockRect.left;
+      const dist = Math.abs(mouseX - centerX);
+      const maxDist = 120;
+      if (dist < maxDist) {
+        const t = 1 - dist / maxDist;
+        item.style.transform = `translateY(-${t * 20}px) scale(${1 + t * 0.55})`;
+      } else {
+        item.style.transform = '';
+      }
+    });
+  });
+  dock.addEventListener('mouseleave', () => { items.forEach(i => i.style.transform = ''); });
+
+  function scrollToProject(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ---- CAROUSELS ----
+  document.querySelectorAll('.carousel').forEach(car => {
+    const slides = Array.from(car.querySelectorAll('.car-slide'));
+    const dots = Array.from(car.querySelectorAll('.car-dot'));
+    const counter = car.querySelector('.car-counter');
+    const total = slides.length;
+    let cur = 0;
+
+    function goTo(idx) {
+      slides[cur].classList.remove('active');
+      dots[cur] && dots[cur].classList.remove('active');
+      cur = ((idx % total) + total) % total;
+      slides[cur].classList.add('active');
+      dots[cur] && dots[cur].classList.add('active');
+      if (counter) counter.textContent = `${cur + 1} / ${total}`;
+    }
+
+    car.querySelector('.car-prev').addEventListener('click', () => { goTo(cur - 1); reset(); });
+    car.querySelector('.car-next').addEventListener('click', () => { goTo(cur + 1); reset(); });
+    dots.forEach((dot, i) => dot.addEventListener('click', () => { goTo(i); reset(); }));
+
+    let timer = total > 1 ? setInterval(() => goTo(cur + 1), 3800) : null;
+    function reset() { if (timer) { clearInterval(timer); timer = setInterval(() => goTo(cur + 1), 3800); } }
+  });
+
+  // ---- SCROLL REVEAL ----
+  const revealObs = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed') }),
+    { threshold: 0.06, rootMargin: '0px 0px -60px 0px' }
+  );
+  document.querySelectorAll('.project-reveal').forEach(el => revealObs.observe(el));
+
+  const sectionObs = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view') }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.project-section').forEach(s => sectionObs.observe(s));
+</script>
+</body>
+</html>
